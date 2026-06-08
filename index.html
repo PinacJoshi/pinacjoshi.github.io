@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pinac Chetan Joshi // Portfolio</title>
+    <style>
+        /* --- DESIGN SYSTEM & MATRIX THEME --- */
+        :root {
+            --bg-deep: #06090e;          /* Deeper dark space */
+            --bg-surface: #0b111e;       /* Card and sidebar surface */
+            --border-glow: #151f32;      /* Grid line color */
+            --cyber-green: #10b981;      /* Emerald alert / main accent */
+            --cyber-blue: #3b82f6;       /* Diagnostic network blue */
+            --text-primary: #f1f5f9;     /* Highly legible primary text */
+            --text-muted: #64748b;       /* Muted technical text */
+            --font-sans: 'Inter', system-ui, -apple-system, sans-serif; /* Clean, un-cluttered font */
+            --font-mono: 'Consolas', 'Courier New', monospace;
+        }
+
+        /* --- SMOOTH SCROLL ENABLER --- */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            
+            /* --- REFINED MATRIX GRID WITH GLOWING DOT INTERSECTIONS --- */
+            background-image: 
+                radial-gradient(rgba(16, 185, 129, 0.12) 1.5px, transparent 1.5px),
+                linear-gradient(var(--border-glow) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border-glow) 1px, transparent 1px);
+            background-size: 32px 32px;
+            background-position: center top;
+        }
+
+        /* --- MAIN TWO-COLUMN CONTAINER --- */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            max-width: 1300px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        @media (max-width: 950px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* --- STICKY LEFT-HAND SIDEBAR --- */
+        .sidebar {
+            background-color: var(--bg-surface);
+            border-right: 1px solid var(--border-glow);
+            padding: 2.5rem 2rem 0 2rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: auto;
+            z-index: 10;
+        }
+
+        @media (max-width: 950px) {
+            .sidebar {
+                position: relative;
+                height: auto;
+                padding-bottom: 2rem;
+                border-right: none;
+                border-bottom: 1px solid var(--border-glow);
+            }
+        }
+
+        .sidebar-identity h1 {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .sidebar-identity .status-node {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--cyber-green);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.25rem;
+        }
+
+        /* Contact Lists with SVGs */
+        .contact-list {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-family: var(--font-mono);
+            transition: color 0.2s;
+        }
+
+        .contact-item:hover {
+            color: var(--cyber-green);
+        }
+
+        .contact-item svg {
+            width: 15px;
+            height: 15px;
+            fill: none;
+            stroke: var(--cyber-blue);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+
+        .contact-item:hover svg {
+            stroke: var(--cyber-green);
+        }
+
+        /* Left-side tab navigation */
+        .sidebar-nav {
+            margin-top: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        @media (max-width: 950px) {
+            .sidebar-nav { display: none; }
+        }
+
+        .sidebar-nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            padding: 6px 12px;
+            border-left: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .sidebar-nav a:hover {
+            color: #fff;
+            border-left-color: var(--cyber-blue);
+            background: rgba(59, 130, 246, 0.04);
+        }
+
+        /* Layered Mountain Base Vector */
+        .mountain-container {
+            margin-left: -2rem;
+            margin-right: -2rem;
+            margin-top: 1.5rem;
+            line-height: 0;
+            pointer-events: none;
+        }
+
+        .mountain-container svg {
+            width: 100%;
+            height: auto;
+        }
+
+        /* --- LINEAR CONTENT COLUMN (RIGHT) --- */
+        .main-content {
+            padding: 3rem;
+            max-width: 950px;
+        }
+
+        @media (max-width: 600px) {
+            .main-content { padding: 1.5rem; }
+        }
+
+        /* Top Hero Split Area */
+        .hero-split {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 1.5rem;
+            margin-bottom: 3.5rem;
+            align-items: start;
+        }
+
+        @media (max-width: 850px) {
+            .hero-split { grid-template-columns: 1fr; }
+        }
+
+        /* Standardized Surface Cards */
+        .data-card {
+            background-color: rgba(11, 17, 30, 0.85);
+            border: 1px solid var(--border-glow);
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+            border-radius: 6px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .intro-title, .section-mini-title {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--cyber-green);
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+            letter-spacing: 1px;
+            display: block;
+        }
+
+        .intro-card p {
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            color: #cbd5e1;
+        }
+
+        .intro-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Highlight Cards Container */
+        .highlights-card-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .highlight-item-box {
+            border: 1px solid var(--border-glow);
+            background: #06090e;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .image-viewport {
+            width: 100%;
+            height: 105px;
+            background: #0c121f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            border-bottom: 1px solid var(--border-glow);
+            position: relative;
+        }
+
+        .image-viewport::before {
+            content: '[ IMAGE FRAME INTERFACE ]';
+        }
+
+        .image-viewport img {
+            width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;
+        }
+
+        .image-caption {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.8rem;
+            color: var(--text-primary);
+        }
+
+        /* --- SECTION STRUCTURES --- */
+        .section-block {
+            margin-bottom: 3.5rem;
+        }
+
+        .block-title {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--cyber-blue);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .block-title::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--border-glow), transparent);
+        }
+
+        /* --- PROJECT CARDS: LEFT SIDE IMAGE LAYOUT --- */
+        .project-card {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 700px) {
+            .project-card { flex-direction: column; }
+            .project-img-side { width: 100% !important; height: 140px !important; }
+        }
+
+        .project-img-side {
+            width: 180px;
+            height: auto;
+            min-height: 120px;
+            background: #06090e;
+            border: 1px solid var(--border-glow);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-img-side::before {
+            content: '[ PREVIEW ]';
+        }
+
+        .project-img-side img {
+            width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;
+        }
+
+        .project-text-side {
+            flex-grow: 1;
+        }
+
+        /* Data Card Interior Formats */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 0.4rem;
+        }
+
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .card-date {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--cyber-green);
+        }
+
+        .card-subtitle {
+            font-family: var(--font-mono);
+            color: var(--cyber-blue);
+            font-size: 0.8rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .card-ul {
+            list-style: none;
+        }
+
+        .card-ul li {
+            position: relative;
+            padding-left: 1.25rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+        }
+
+        .card-ul li::before {
+            content: '▪';
+            position: absolute;
+            left: 0;
+            color: var(--cyber-green);
+            font-size: 0.7rem;
+            top: 2px;
+        }
+
+        .card-links {
+            margin-top: 0.75rem;
+            padding-top: 0.5rem;
+            border-top: 1px dashed var(--border-glow);
+        }
+
+        .card-links a {
+            font-family: var(--font-mono);
+            color: var(--cyber-green);
+            text-decoration: none;
+            font-size: 0.75rem;
+            margin-right: 15px;
+        }
+
+        .card-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Skills Matrix Adjustments */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        @media (max-width: 650px) {
+            .skills-grid { grid-template-columns: 1fr; }
+        }
+
+        .tag-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tag {
+            background-color: var(--bg-deep);
+            border: 1px solid var(--border-glow);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 2px;
+        }
+
+        .cert-item {
+            font-size: 0.8rem;
+            padding: 4px 0;
+            border-bottom: 1px dashed var(--border-glow);
+            color: #cbd5e1;
+        }
+        .cert-item:last-child { border-bottom: none; }
+
+        footer {
+            margin-top: 5rem;
+            border-top: 1px solid var(--border-glow);
+            padding-top: 1.25rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="portfolio-grid">
+
+        <!-- --- STICKY SIDEBAR PANEL (LEFT-HAND) --- -->
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <div class="sidebar-identity">
+                    <!-- Data safely parsed verbatim from source Pinac Joshi CV_2.pdf -->
+                    <h1>Pinac Joshi</h1> <!-- -->
+                    <div class="status-node">// Node: MSc Cybersecurity @ DTU</div> <!-- -->
+                </div>
+
+                <!-- Verified Hyperlink Contacts with Mapped Icons -->
+                <nav class="contact-list">
+                    <span class="contact-item">
+                        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Copenhagen, Denmark <!-- -->
+                    </span>
+                    <a href="mailto:pinacjoshi@gmail.com" class="contact-item">
+                        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        pinacjoshi@gmail.com <!-- -->
+                    </a>
+                    <a href="https://linkedin.com/in/pinacjoshi/" target="_blank" class="contact-item">
+                        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        in/pinacjoshi <!-- -->
+                    </a>
+                    <a href="https://medium.com/@pinac.joshi" target="_blank" class="contact-item">
+                        <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                        @pinac.joshi <!-- -->
+                    </a>
+                    <a href="https://github.com/PinacJoshi" target="_blank" class="contact-item">
+                        <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                        PinacJoshi <!-- -->
+                    </a>
+                </nav>
+
+                <!-- Left side section navigation links mapping smoothly -->
+                <div class="sidebar-nav">
+                    <a href="#profile">// 01 : System Profile</a>
+                    <a href="#projects">// 02 : Technical Builds</a>
+                    <a href="#skills">// 03 : Knowledge Matrix</a>
+                    <a href="#experience">// 04 : Operational Logs</a>
+                    <a href="#education">// 05 : Academic Baseline</a>
+                </div>
+            </div>
+
+            <!-- Layered Abstract SVG Mountain Vectors -->
+            <div class="mountain-container">
+                <svg viewBox="0 0 340 120" preserveAspectRatio="none">
+                    <path d="M0,90 L40,60 L90,85 L160,40 L230,80 L290,55 L340,95 L340,120 L0,120 Z" fill="#0b1322" opacity="0.4"/>
+                    <path d="M0,100 L60,75 L120,95 L190,55 L260,85 L310,65 L340,105 L340,120 L0,120 Z" fill="#111c30" opacity="0.7"/>
+                    <path d="M0,110 L80,90 L150,105 L210,70 L280,95 L340,80 L340,120 L0,120 Z" fill="#0d1527"/>
+                </svg>
+            </div>
+        </aside>
+
+        <!-- --- MAIN CONTENT AREA (RIGHT-HAND) --- -->
+        <main class="main-content">
+
+            <!-- FIRST SECTION: HERO SPLIT WRAPPED IN SURFACE CARDS -->
+            <section class="hero-split" id="profile">
+                
+                <!-- Profile Block as a Card -->
+                <div class="data-card intro-card">
+                    <span class="intro-title">01 // Identity Summary</span>
+                    <!-- Data fields derived precisely from Pinac Joshi CV_2.pdf -->
+                    <p>CEH-certified graduate in Cybersecurity and Digital Forensics, completing an MSc in Computer Science and Engineering at the Technical University of Denmark (DTU).</p>
+                    <p>Experienced in delivering live penetration testing training modules and developing customized dynamic steganography utilities.</p>
+                    <p>Currently researching endpoint log collection and environment telemetry through a self-built headless SOC homelab setup. Seeking target entry-level positions to defend corporate networks.</p>
+                    <!-- <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
+                        [Status: 90hrs/Month Permit Tracked // Full Available June, July, August]
+                    </p> -->
+                </div>
+
+                <!-- Highlights Block as a Card -->
+                <div class="data-card highlights-card-container">
+                    <span class="section-mini-title" style="color: var(--cyber-blue);">02 // Highlights</span>
+                    
+                    <!-- Highlight Image Instance 1 -->
+                    <div class="highlight-item-box">
+                        <div class="image-viewport">
+                            <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*qZkg_LDvX65fT1nceLKukg.png">
+                        </div>
+                        <div class="image-caption">
+                            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--cyber-green);">[ENV_01]</span> Log collection telemetry pipelines.
+                        </div>
+                    </div>
+
+                    <!-- Highlight Image Instance 2 -->
+                    <div class="highlight-item-box">
+                        <div class="image-viewport">
+                            <img src="https://github.com/user-attachments/assets/625b0d1a-10c7-4518-95b8-260a0000441d">
+                        </div>
+                        <div class="image-caption">
+                            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--cyber-blue);">[TOOL_02]</span> Command line note utility workspace.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROJECTS SECTION (LEFT PANEL IMAGE LAYOUT) -->
+            <section class="section-block" id="projects">
+                <div class="block-title">03 // Technical Projects</div>
+
+                <!-- Project Card 1 -->
+                <div class="data-card project-card">
+                    <div class="project-img-side">
+                        <!-- Left-Side Image Placeholder. Replace with actual source path later: -->
+                        <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*qZkg_LDvX65fT1nceLKukg.png">
+                    </div>
+                    <div class="project-text-side">
+                        <div class="card-header">
+                            <div class="card-title">Cybersecurity Homelab & SOC Simulation</div> <!-- -->
+                            <div class="card-date">2026 - Present</div> <!-- -->
+                        </div>
+                        <ul class="card-ul">
+                            <li>Engineered headless Debian 13 node on legacy systems, lowering resource footprints.</li>
+                            <li>Automated monitorless console connections via systemd network reporting hooks on boot.</li>
+                            <li>Hardened boundary routing schemas against dynamic external provider constraints.</li>
+                            <li>Publishes architectural optimization documentation inside the "Resource-Constrained Security" sequence on Medium.</li>
+                        </ul>
+                        <div class="card-links">
+                            <a href="https://medium.com/@pinac.joshi" target="_blank">[Read Publication]</a> <!-- -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="data-card project-card">
+                    <div class="project-img-side">
+                        <img src="https://github.com/user-attachments/assets/625b0d1a-10c7-4518-95b8-260a0000441d">
+                    </div>
+                    <div class="project-text-side">
+                        <div class="card-header">
+                            <div class="card-title">Noterm - Terminal Note-taking TUI</div> <!-- -->
+                            <div class="card-date">2026</div> <!-- -->
+                        </div>
+                        <div class="card-subtitle">Bash, fzf, CLI Orchestration</div> <!-- -->
+                        <ul class="card-ul">
+                            <li>Orchestrated local utilities (fzf, bat, glow) to construct a rapid terminal editor space.</li>
+                            <li>Enforced strict Unix design patterns, completely avoiding database engine overhead.</li>
+                        </ul>
+                        <div class="card-links">
+                            <a href="https://github.com/PinacJoshi" target="_blank">[Source Code]</a> <!-- -->
+                            <a href="https://medium.com/@pinac.joshi" target="_blank">[Technical Log]</a> <!-- -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="data-card project-card">
+                    <div class="project-img-side">
+                        <img src="images/ezgif.com-optimize.gif">
+                    </div>
+                    <div class="project-text-side">
+                        <div class="card-header">
+                            <div class="card-title">Covert Communication via QR Codes</div> <!-- -->
+                            <div class="card-date">2024 - 2025</div> <!-- -->
+                        </div>
+                        <div class="card-subtitle">Python // Bachelor Thesis Initiative</div> <!-- -->
+                        <ul class="card-ul">
+                            <li>Hided encrypted data layers inside dynamic GIF sequences using pixel structure modification.</li>
+                            <li>Doubled data extraction payload limits compared to static, original standard QR profiles.</li>
+                        </ul>
+                        <div class="card-links">
+                            <a href="https://github.com/PinacJoshi" target="_blank">[Source Code]</a> <!-- -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CREDENTIALS MATRIX -->
+            <section class="section-block" id="skills">
+                <div class="block-title">04 // Verification Matrix</div>
+                
+                <div class="skills-grid">
+                    <div class="data-card" style="margin-bottom:0;">
+                        <span class="section-mini-title">Accreditations</span>
+                        <div class="cert-item"><strong>EC-Council:</strong> Certified Ethical Hacker (CEH) - 109/125</div>
+                        <div class="cert-item"><strong>ISC2:</strong> Certified in Cybersecurity (CC)</div>
+                        <div class="cert-item"><strong>NPTEL:</strong> Blockchain Architecture - Top 5% Merit</div>
+                        <div class="cert-item"><strong>Oracle:</strong> Java Certified Foundations Associate</div>
+                        <div class="cert-item"><strong>IELTS:</strong> English Evaluation - Band 8.0/9.0</div>
+                    </div>
+
+                    <div class="data-card" style="margin-bottom:0;">
+                        <span class="section-mini-title">Tooling Vector Signatures</span>
+                        <div class="tag-wrap">
+                            <span class="tag">Python</span> <span class="tag">Java</span> <span class="tag">C++</span> <span class="tag">Bash</span> <!-- -->
+                            <span class="tag">Linux Hardening</span> <span class="tag">Aircrack-ng</span> <span class="tag">Nmap</span> <!-- -->
+                            <span class="tag">Wireshark</span> <span class="tag">nftables</span> <span class="tag">SSH Secure</span> <!-- -->
+                            <span class="tag">Docker Compartments</span> <span class="tag">Git Engine</span> <span class="tag">Hypervisors</span> <!-- -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EXPERIENCE SECTIONS -->
+            <section class="section-block" id="experience">
+                <div class="block-title">05 // Operational Experience Logs</div>
+
+                <div class="data-card">
+                    <div class="card-header">
+                        <div class="card-title">Indian Youth Association of Denmark</div> <!-- -->
+                        <div class="card-date">2025 - Present</div> <!-- -->
+                    </div>
+                    <div class="card-subtitle">Volunteer Team Member</div> <!-- -->
+                    <ul class="card-ul">
+                        <li>Coordinate cultural bridge events to aid integration for international student networks.</li>
+                    </ul>
+                </div>
+
+                <div class="data-card">
+                    <div class="card-header">
+                        <div class="card-title">Bit by Bit Club, VIT Bhopal University</div> <!-- -->
+                        <div class="card-date">2022</div> <!-- -->
+                    </div>
+                    <div class="card-subtitle">Wireless Security Demonstrator</div> <!-- -->
+                    <ul class="card-ul">
+                        <li>Conducted active over-the-air handshake capture and cracking modules using Aircrack-ng arrays.</li>
+                        <li>Taught standard enterprise network vector security steps to an audience of 50+ students.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- EDUCATION BACKGROUND -->
+            <section class="section-block" id="education">
+                <div class="block-title">06 // Academic Vectors</div>
+
+                <div class="data-card">
+                    <div class="card-header">
+                        <div class="card-title">Technical University of Denmark (DTU)</div> <!-- -->
+                        <div class="card-date">2025 - Expected 2027</div> <!-- -->
+                    </div>
+                    <div class="card-subtitle">MSc Eng in Computer Science and Engineering (Cybersecurity Specialization)</div> <!-- -->
+                    <ul class="card-ul">
+                        <li>Focusing core modules across Cloud Networking, Advanced Cybersecurity, and Incident Response.</li>
+                    </ul>
+                </div>
+
+                <div class="data-card">
+                    <div class="card-header">
+                        <div class="card-title">Vellore Institute of Technology (VIT)</div> <!-- -->
+                        <div class="card-date">2021 - 2025</div> <!-- -->
+                    </div>
+                    <div class="card-subtitle">B.Tech in Computer Science (Cyber Security and Digital Forensics)</div> <!-- -->
+                    <ul class="card-ul">
+                        <li>Graduated with a Cumulative Grade Point Average standing of 8.1 / 10.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- FOOTER CORE METRICS -->
+            <footer>
+                <div>GRID MATRIX // NODE ATTACHED STABLE</div>
+                <div>SYSTEM TIME: 2026 // ALL THREADS INSTANTIATED</div>
+            </footer>
+
+        </main>
+    </div>
+
+</body>
+</html>
